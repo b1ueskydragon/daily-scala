@@ -2,8 +2,6 @@ package com.github.study.wordcount
 
 import org.scalatest._
 
-import scala.collection.mutable.Stack
-
 /**
  * Created by tamaki on 2015/02/08.
  */
