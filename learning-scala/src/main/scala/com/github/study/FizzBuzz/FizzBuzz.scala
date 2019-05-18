@@ -19,8 +19,29 @@ object FizzBuzz {
       case (_, _, x) => x.toString
     }
 
+  def fizzBuzzStream(from: Int) = {
+
+    // if make a recursive stream with `val`, make `lazy`
+    // since to prevent `Forward reference extends over definition of value`
+
+    def three(x: Int): Stream[Any] = Stream(x, x + 1, "Fizz") #::: three(x + 3)
+
+    def five(x: Int): Stream[Any] = Stream(x, x + 1, x + 2, x + 3, "Buzz") #::: five(x + 5)
+
+    five(from).zip(three(from)).map {
+      case (b: String, f: String) => f + b
+      case (_, f: String) => f
+      case (b: String, _) => b
+      case x => x._1
+    }
+
+  }
+
   def main(args: Array[String]): Unit = {
-    println(fizzBuzz_(1 to 20))
+
+    println(fizzBuzz_(1 to 20).toList)
+    println(fizzBuzzStream(1).take(20).toList)
+
   }
 
 }
