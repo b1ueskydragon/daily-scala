@@ -1,10 +1,12 @@
 package com.github.study.FizzBuzz
 
-/**
- * Created by tamaki on 2015/02/08.
- */
 object FizzBuzz {
-  def main(args: Array[String]): Unit = {
 
+  def fizzBuzz(x: Int): String = x match {
+    case _ if x % 15 == 0 => "FizzBuzz"
+    case _ if x % 3 == 0 => "Fizz"
+    case _ if x % 5 == 0 => "Buzz"
+    case _ => x.toString
   }
+
 }
