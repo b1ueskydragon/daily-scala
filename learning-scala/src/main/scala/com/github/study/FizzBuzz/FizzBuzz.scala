@@ -37,10 +37,27 @@ object FizzBuzz {
 
   }
 
+  def fizzBuzzTypeSafe(from: Int) = {
+
+    def three(x: Int): Stream[String] = Stream(s"$x", s"${x + 1}", "Fizz") #::: three(x + 3)
+
+    def five(x: Int): Stream[String] = Stream(s"$x", s"${x + 1}", s"${x + 2}", s"${x + 3}", "Buzz") #::: five(x + 5)
+
+    five(from).zip(three(from)).map {
+      case ("Buzz", "Fizz") => "FizzBuzz"
+      case (_, "Fizz") => "Fizz"
+      case ("Buzz", _) => "Buzz"
+      case x => x._1
+    }
+
+  }
+
   def main(args: Array[String]): Unit = {
 
     println(fizzBuzz_(1 to 20).toList)
     println(fizzBuzzStream(1).take(20).toList)
+    println(fizzBuzzTypeSafe(1).take(20).toList)
+
 
   }
 
