@@ -21,9 +21,6 @@ object FizzBuzz {
 
   def fizzBuzzStream(from: Int) = {
 
-    // if make a recursive stream with `val`, make `lazy`
-    // since to prevent `Forward reference extends over definition of value`
-
     def three(x: Int): Stream[Any] = Stream(x, x + 1, "Fizz") #::: three(x + 3)
 
     def five(x: Int): Stream[Any] = Stream(x, x + 1, x + 2, x + 3, "Buzz") #::: five(x + 5)
@@ -37,7 +34,7 @@ object FizzBuzz {
 
   }
 
-  def fizzBuzzTypeSafe(from: Int) = {
+  def fizzBuzzStreamString(from: Int) = {
 
     def three(x: Int): Stream[String] = Stream(s"$x", s"${x + 1}", "Fizz") #::: three(x + 3)
 
@@ -52,12 +49,28 @@ object FizzBuzz {
 
   }
 
+  def fizzBuzzStreamTypeSafe(from: Int) = {
+
+    // if make a recursive stream with `val`, make `lazy`
+    // since to prevent `Forward reference extends over definition of value`
+
+    lazy val three: Stream[Option[String]] = Stream(None, None, Some("Fizz")) #::: three
+
+    lazy val five: Stream[Option[String]] = Stream(None, None, None, None, Some("Buzz")) #::: five
+
+    three.zip(five).zip(Stream.from(1)).map {
+      case ((None, None), k) => k
+      case ((f, b), _) => f.getOrElse("") + b.getOrElse("")
+    }
+
+  }
+
   def main(args: Array[String]): Unit = {
 
     println(fizzBuzz_(1 to 20).toList)
     println(fizzBuzzStream(1).take(20).toList)
-    println(fizzBuzzTypeSafe(1).take(20).toList)
-
+    println(fizzBuzzStreamString(1).take(20).toList)
+    println(fizzBuzzStreamTypeSafe(1).take(20).toList)
 
   }
 
