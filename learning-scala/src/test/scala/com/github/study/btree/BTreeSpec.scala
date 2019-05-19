@@ -2,12 +2,12 @@ package com.github.study.btree
 
 import org.scalatest._
 
-/** Created by shintaro.tamaki on 2015/10/29. */
 class BTreeSpec extends FunSpec with Matchers {
 
   describe("BTree") {
 
     describe("Create BTree with Leaf and Branch combination") {
+
       val bTree1 = BTree(Leaf(1))
       val bTree2 = BTree(Branch(Leaf(1), 2, Leaf(3)))
       val bTree3 = BTree(Branch(Branch(Leaf(1), 2, Leaf(3)), 4, Branch(Leaf(5), 6, Leaf(7))))
@@ -51,6 +51,20 @@ class BTreeSpec extends FunSpec with Matchers {
         BTree(List(1, 2, 3)) should be(bTree2)
         BTree(List(1, 2, 3, 4, 5, 6, 7)) should be(bTree3)
       }
+
+      it("should define new BTree with previous BTree nodes") {
+        val bTree3mid = 8
+        val bTree3r = BTree((9 to 15).toList)
+        val bTree4 = BTree(Branch(bTree3.node, bTree3mid, bTree3r.node))
+
+        println(bTree3r)
+        println(bTree4)
+
+        BTree((1 to 15).toList) should be(bTree4)
+      }
+
     }
+
   }
+
 }
