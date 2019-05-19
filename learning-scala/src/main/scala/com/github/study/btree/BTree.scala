@@ -38,8 +38,10 @@ case class BTree(node: Node) {
 object BTree {
   def apply(list: List[Int]): BTree = list match {
     case List(x) => BTree(Leaf(x))
-    case l@List(_, _, _) => BTree(Branch(Leaf(l.min), l.sum / 3, Leaf(l.max)))
-    case _ => ???
+    case xs =>
+      val mid = xs.length / 2
+      val (low, high) = (xs.take(mid), xs.drop(mid + 1))
+      BTree(Branch(BTree(low).node, xs(mid), BTree(high).node))
   }
 
 }
