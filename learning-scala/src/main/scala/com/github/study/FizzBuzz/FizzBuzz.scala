@@ -65,4 +65,9 @@ object FizzBuzz {
 
   }
 
+  def testFizzBuzz(f: (Int, String) => Unit) {
+    val provider = Iterable((3, "Fizz"), (5, "Buzz"), (7, "7"), (15, "FizzBuzz"))
+    provider foreach (e => f(e._1, e._2))
+  }
+
 }

@@ -1,6 +1,6 @@
 package com.github.study.FizzBuzz
 
-import com.github.study.FizzBuzz.FizzBuzz.{fizzBuzzIte, fizzBuzzStreamTypeSafe => fizzBuzzStream}
+import com.github.study.FizzBuzz.FizzBuzz.{fizzBuzzIte, testFizzBuzz, fizzBuzzStreamTypeSafe => fizzBuzzStream}
 import org.scalatest.{FunSpec, Matchers}
 
 /** Created by b1ueskydragon on 2019/05/18. */
@@ -52,6 +52,18 @@ class FizzBuzzSpec extends FunSpec with Matchers {
         fizzBuzzStream(from).take(n).toList should be(fizzBuzzIte(range).toList)
       }
 
+    }
+
+  }
+
+  describe("testFizzBuzz") {
+
+    it("could be used ParameterizedTest like") {
+      testFizzBuzz((input, expected) => FizzBuzz.fizzBuzz(input) should be(expected))
+    }
+
+    it("could be converted to implicit parameter if parameters are ordered correctly") {
+      testFizzBuzz(FizzBuzz.fizzBuzz(_) should be(_))
     }
 
   }
