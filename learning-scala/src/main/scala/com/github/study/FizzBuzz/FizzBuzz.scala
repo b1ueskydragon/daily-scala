@@ -9,7 +9,7 @@ object FizzBuzz {
     case _ => x.toString
   }
 
-  def fizzBuzz_(sortedInc: Range): Iterable[String] =
+  def fizzBuzzIte(sortedInc: Range): Iterable[String] =
     sortedInc.map {
       x => (x % 3, x % 5, x)
     }.map {
@@ -19,7 +19,7 @@ object FizzBuzz {
       case (_, _, x) => x.toString
     }
 
-  def fizzBuzzStream(from: Int) = {
+  def fizzBuzzStreamAny(from: Int): Stream[Any] = {
 
     def three(x: Int): Stream[Any] = Stream(x, x + 1, "Fizz") #::: three(x + 3)
 
@@ -34,7 +34,7 @@ object FizzBuzz {
 
   }
 
-  def fizzBuzzStreamString(from: Int) = {
+  def fizzBuzzStreamString(from: Int): Stream[String] = {
 
     def three(x: Int): Stream[String] = Stream(s"$x", s"${x + 1}", "Fizz") #::: three(x + 3)
 
@@ -49,7 +49,7 @@ object FizzBuzz {
 
   }
 
-  def fizzBuzzStreamTypeSafe(from: Int) = {
+  def fizzBuzzStreamTypeSafe(from: Int): Stream[String] = {
 
     // if make a recursive stream with `val`, make `lazy`
     // since to prevent `Forward reference extends over definition of value`
@@ -59,18 +59,9 @@ object FizzBuzz {
     lazy val five: Stream[Option[String]] = Stream(None, None, None, None, Some("Buzz")) #::: five
 
     three.zip(five).zip(Stream.from(1)).map {
-      case ((None, None), k) => k
+      case ((None, None), k) => k.toString
       case ((f, b), _) => f.getOrElse("") + b.getOrElse("")
     }
-
-  }
-
-  def main(args: Array[String]): Unit = {
-
-    println(fizzBuzz_(1 to 20).toList)
-    println(fizzBuzzStream(1).take(20).toList)
-    println(fizzBuzzStreamString(1).take(20).toList)
-    println(fizzBuzzStreamTypeSafe(1).take(20).toList)
 
   }
 
