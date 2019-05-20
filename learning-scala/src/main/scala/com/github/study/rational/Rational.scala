@@ -2,6 +2,7 @@ package com.github.study.rational
 
 // 分数
 case class Rational(n: Int, d: Int) {
+  require(d != 0)
 
   private def lcm(x: Int, y: Int): Int = (x * y) / gcd(x, y)
 
@@ -11,7 +12,7 @@ case class Rational(n: Int, d: Int) {
     case (x, y) if x == y => Rational(n + that.n, d)
     case (x, y) =>
       val lcd = lcm(x, y)
-      Rational(d * (lcd / that.n) + that.d * (lcd / n), lcd)
+      Rational(n * (lcd / d) + that.n * (lcd / that.d), lcd)
   }
 
   def <(that: Rational): Boolean = ???

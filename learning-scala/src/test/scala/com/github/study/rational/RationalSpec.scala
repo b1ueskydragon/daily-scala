@@ -1,10 +1,18 @@
 package com.github.study.rational
 
+import java.lang.IllegalArgumentException
+
 import org.scalatest._
 
 class RationalSpec extends FunSpec with Matchers {
 
   describe("Rational") {
+
+    describe("should have non-zero denominator") {
+      intercept[IllegalArgumentException] {
+        Rational(3, 0)
+      }
+    }
 
     describe("+") {
 
