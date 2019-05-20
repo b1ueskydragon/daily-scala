@@ -25,7 +25,7 @@ class RationalSpec extends FunSpec with Matchers {
       it("should returns new rational even if have different denominators") {
         val x = Rational(1, 15)
         val y = Rational(1, 12)
-        x + y should be(Rational(9, 60)) // ?!
+        x + y should be(Rational(3, 20))
       }
 
     }
