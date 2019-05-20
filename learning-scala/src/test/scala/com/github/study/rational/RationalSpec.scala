@@ -1,7 +1,5 @@
 package com.github.study.rational
 
-import java.lang.IllegalArgumentException
-
 import org.scalatest._
 
 class RationalSpec extends FunSpec with Matchers {
