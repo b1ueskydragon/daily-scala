@@ -20,7 +20,7 @@ class RationalSpec extends FunSpec with Matchers {
         x + y should be(Rational(2, 3))
       }
 
-      it("should returns new rational even if have different denominators") {
+      it("should returns new normalized rational even if have different denominators") {
         val x = Rational(1, 15)
         val y = Rational(1, 12)
         x + y should be(Rational(3, 20))
@@ -34,10 +34,10 @@ class RationalSpec extends FunSpec with Matchers {
         val x = Rational(1, 3)
         val y = Rational(1, 2)
         println(x, y)
-        println(x < y)
-        println(x > y)
-        println(x <= y)
-        println(x >= y)
+        x < y should be(true)
+        x > y should be(false)
+        x <= y should be(true)
+        x >= y should be(false)
       }
 
     }
