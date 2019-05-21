@@ -9,6 +9,17 @@ object FizzBuzz {
     case _ => x.toString
   }
 
+  def fizzBuzzFoldr(xs: List[Int]): List[String] = xs.foldRight(List.empty[String]) { (x, acc) =>
+    (if (x % 15 == 0) "FizzBuzz" else if (x % 3 == 0) "Fizz" else if (x % 5 == 0) "Buzz" else s"$x") :: acc
+  }
+
+  def fizzBuzzListzz(xs: List[Int]): List[String] =
+    xs.zip(List.fill(xs.length)(List(
+      None, None, Some("Fizz"), None, Some("Buzz"),
+      Some("Fizz"), None, None, Some("Fizz"), Some("Buzz"),
+      None, Some("Fizz"), None, None, Some("FizzBuzz")
+    )).flatten).map(z => z._2.getOrElse(s"${z._1}"))
+
   def fizzBuzzIte(sortedInc: Range): Iterable[String] =
     sortedInc.map {
       x => (x % 3, x % 5, x)
