@@ -1,21 +1,25 @@
 package com.github.study.FizzBuzz
 
-case class FizzBuzzElement(
-  ret : String // Either[String, Int]
-) {
-  def toNumber : Option[Int] = ???
-}
+//case class FizzBuzzElement(
+//  ret: String // Either[String, Int]
+//) {
+//  def toNumber: Option[Int] = ???
+//}
 
+/** Separate Collection(create collection) and Output(println etc) */
 object FizzBuzzNewRule {
 
-  def fizzBuzz(i: Int): String = if (i % 15 == 0) "FizzBuzz" else if (i % 5 == 0) "Buzz" else if (i % 3 == 0) "Fizz" else s"$i"
+  def fizzBuzz(n: Int): String = if (n % 15 == 0) "FizzBuzz" else if (n % 5 == 0) "Buzz" else if (n % 3 == 0) "Fizz" else s"$n"
 
-  def fizzBuzz03(n: Int): String = // TODO withfilter
-    if (n % 15 == 0) "FizzBuzz" else if (n % 3 == 0) "Fizz" else if (n % 5 == 0) "Buzz" else if (n % 2 == 0) "" else s"$n"
+  def fizzBuzz03(ns: Range): Seq[String] = ns.filterNot(_ % 2 == 0).map(fizzBuzz)
 
-  def fizzBuzz05(xs: Range): Int = xs.filterNot(x => x % 3 == 0 || x % 5 == 0).sum
+  def fizzBuzz04(ns: Range): String = ns.map(fizzBuzz).mkString(",")
 
-  def fizzBuzz05_(x: Int): Int = (1 + x) * x / 2 - (1 + x / 5) * 5 * x / 5 / 2 - (1 + x / 3) * 3 * (x / 3) / 2 + (1 + x / 15) * 15 * (x / 15) / 2
+  def fizzBuzz05(ns: Range): Int = ns.filterNot(x => x % 3 == 0 || x % 5 == 0).sum
+
+  def fizzBuzz05_(n: Int): Int = (1 + n) * n / 2 - (1 + n / 5) * 5 * n / 5 / 2 - (1 + n / 3) * 3 * (n / 3) / 2 + (1 + n / 15) * 15 * (n / 15) / 2
+
+  def fizzBuzz05__(ns: Range): Int = ns.map(n => fizzBuzz(n)).filter(_.forall(Character.isDigit)).map(_.toInt).sum
 
   def fizzBuzz06(from: Int): Stream[String] = {
 
@@ -34,33 +38,19 @@ object FizzBuzzNewRule {
 
     val range = 1 to 20
 
-    rule("02") {
-      range.foreach { i => println(fizzBuzz(i)) }
-    }
+    rule("02")(range.foreach(i => println(fizzBuzz(i))))
 
-    rule("03") {
-      range.foreach { n => val fb = fizzBuzz03(n); if (fb != "") println(s"$fb") }
-    }
+    rule("03")(outputln(fizzBuzz03(range)))
 
-    rule("04") { // TODO separate collection and output.  mkString(",")
-      range.foreach { n => val fb = fizzBuzz03(n); if (n == range.last) println(s"$fb") else if (fb != "") print(s"$fb,") }
-    }
+    rule("04")(output(fizzBuzz04(range)))
 
-    rule("05") {
-      println(fizzBuzz05(range))
-    }
+    rule("05")(println(fizzBuzz05(range)))
 
-    rule("05_") {
-      println(fizzBuzz05_(range.last)) // TODO fix bug if range is not 20
-    }
+    rule("05_")(println(fizzBuzz05_(range.last))) // TODO fix bug if range is not 20
 
-    rule("05__") {
-      println(range.map(n => fizzBuzz(n)).filter(_.forall(Character.isDigit)).map(_.toInt).sum)
-    }
+    rule("05__")(println(fizzBuzz05__(range)))
 
-    rule("06") {
-      fizzBuzz06(range.head).take(range.last).foreach(println)
-    }
+    rule("06")(outputln(fizzBuzz06(range.head), range.last))
 
   }
 
@@ -69,5 +59,14 @@ object FizzBuzzNewRule {
     f
     println()
   }
+
+  private def output[T](xs: Seq[T]) {
+    xs.foreach(print)
+    println()
+  }
+
+  private def outputln[T](xs: Seq[T]): Unit = xs.foreach(println)
+
+  private def outputln[T](xs: Stream[T], n: Int): Unit = xs.take(n).foreach(println)
 
 }
