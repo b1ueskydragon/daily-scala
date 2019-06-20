@@ -1,10 +1,16 @@
 package com.github.study.FizzBuzz
 
+case class FizzBuzzElement(
+  ret : String // Either[String, Int]
+) {
+  def toNumber : Option[Int] = ???
+}
+
 object FizzBuzzNewRule {
 
   def fizzBuzz(i: Int): String = if (i % 15 == 0) "FizzBuzz" else if (i % 5 == 0) "Buzz" else if (i % 3 == 0) "Fizz" else s"$i"
 
-  def fizzBuzz03(n: Int): String =
+  def fizzBuzz03(n: Int): String = // TODO withfilter
     if (n % 15 == 0) "FizzBuzz" else if (n % 3 == 0) "Fizz" else if (n % 5 == 0) "Buzz" else if (n % 2 == 0) "" else s"$n"
 
   def fizzBuzz05(xs: Range): Int = xs.filterNot(x => x % 3 == 0 || x % 5 == 0).sum
@@ -36,7 +42,7 @@ object FizzBuzzNewRule {
       range.foreach { n => val fb = fizzBuzz03(n); if (fb != "") println(s"$fb") }
     }
 
-    rule("04") {
+    rule("04") { // TODO separate collection and output.  mkString(",")
       range.foreach { n => val fb = fizzBuzz03(n); if (n == range.last) println(s"$fb") else if (fb != "") print(s"$fb,") }
     }
 
