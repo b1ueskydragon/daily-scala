@@ -1,26 +1,25 @@
 package com.github.study.FizzBuzz
 
-case class FizzBuzzElement(
-  ret: Either[String, Int]
-) {
+case class FizzBuzzElement(ret: Either[String, Int]) {
+  def toNumber: Option[Int] = ret.fold(_ => None, Some(_))
+}
 
-  def toNumber: Option[Int] = ret match {
-    case Right(n) => Some(n)
-    case _ => None
+object FizzBuzzElement {
+  def apply(n: Int): FizzBuzzElement = {
+    val x = if (n % 15 == 0) Left("FizzBuzz") else if (n % 5 == 0) Left("Buzz") else if (n % 3 == 0) Left("Fizz") else Right(n)
+    FizzBuzzElement(x)
   }
-
 }
 
 object FizzBuzzType {
-
-  def fizzBuzz(n: Int): FizzBuzzElement =
-    FizzBuzzElement(if (n % 15 == 0) Left("FizzBuzz") else if (n % 5 == 0) Left("Buzz") else if (n % 3 == 0) Left("Fizz") else Right(n))
 
   def main(args: Array[String]): Unit = {
 
     val range = 1 to 20
 
-    rule("05")(range.map(fizzBuzz).flatMap(_.toNumber).sum.out())
+    rule("03")(range.withFilter(_ % 2 != 0).map(FizzBuzzElement(_)).map(_.ret.fold(s => s, i => s"$i")).out())
+
+    rule("05")(range.map(FizzBuzzElement(_)).flatMap(_.toNumber).sum.out())
 
   }
 
