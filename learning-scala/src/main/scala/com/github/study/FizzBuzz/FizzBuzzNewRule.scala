@@ -11,7 +11,9 @@ object FizzBuzzNewRule {
 
   def fizzBuzz05(ns: Range): Int = ns.filterNot(x => x % 3 == 0 || x % 5 == 0).sum
 
-  def fizzBuzz05_(n: Int): Int = (1 + n) * n / 2 - (1 + n / 5) * 5 * (n / 5) / 2 - (1 + n / 3) * 3 * (n / 3) / 2 + (1 + n / 15) * 15 * (n / 15) / 2
+  def sum(n: Int, k: Int): Int = (1 + n / k) * k * (n / k) / 2
+
+  def fizzBuzz05_(n: Int): Int = sum(n, 1) - sum(n, 3) - sum(n, 5) + sum(n, 15)
 
   def fizzBuzz05__(ns: Range): Int = ns.map(n => fizzBuzz(n)).filter(_.forall(Character.isDigit)).map(_.toInt).sum
 
