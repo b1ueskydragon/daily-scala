@@ -1,11 +1,5 @@
 package com.github.study.FizzBuzz
 
-//case class FizzBuzzElement(
-//  ret: String // Either[String, Int]
-//) {
-//  def toNumber: Option[Int] = ???
-//}
-
 /** Separate Collection(create collection) and Output(println etc) */
 object FizzBuzzNewRule {
 
