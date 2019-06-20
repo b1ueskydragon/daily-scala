@@ -21,7 +21,7 @@ object FizzBuzzNewRule {
 
   def fizzBuzz05__(ns: Range): Int = ns.map(n => fizzBuzz(n)).filter(_.forall(Character.isDigit)).map(_.toInt).sum
 
-  def fizzBuzz06(from: Int): Stream[String] = {
+  def fizzBuzz06: Stream[String] = {
 
     def three: Stream[Option[String]] = Stream(None, None, Some("Fizz")) #::: three
 
@@ -50,7 +50,7 @@ object FizzBuzzNewRule {
 
     rule("05__")(fizzBuzz05__(range).out())
 
-    rule("06")(fizzBuzz06(range.head).take(range.last).out())
+    rule("06")(fizzBuzz06.take(range.last).out())
 
   }
 

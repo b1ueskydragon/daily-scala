@@ -69,7 +69,7 @@ object FizzBuzz {
 
     lazy val five: Stream[Option[String]] = Stream(None, None, None, None, Some("Buzz")) #::: five
 
-    three.zip(five).zip(Stream.from(1)).map {
+    three.zip(five).zip(Stream.from(from)).map {
       case ((None, None), k) => k.toString
       case ((f, b), _) => f.getOrElse("") + b.getOrElse("")
     }
