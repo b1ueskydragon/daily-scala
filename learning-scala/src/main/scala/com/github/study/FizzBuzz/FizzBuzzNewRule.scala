@@ -11,7 +11,7 @@ object FizzBuzzNewRule {
 
   def fizzBuzz05(ns: Range): Int = ns.filterNot(x => x % 3 == 0 || x % 5 == 0).sum
 
-  def fizzBuzz05_(n: Int): Int = (1 + n) * n / 2 - (1 + n / 5) * 5 * n / 5 / 2 - (1 + n / 3) * 3 * (n / 3) / 2 + (1 + n / 15) * 15 * (n / 15) / 2
+  def fizzBuzz05_(n: Int): Int = (1 + n) * n / 2 - (1 + n / 5) * 5 * (n / 5) / 2 - (1 + n / 3) * 3 * (n / 3) / 2 + (1 + n / 15) * 15 * (n / 15) / 2
 
   def fizzBuzz05__(ns: Range): Int = ns.map(n => fizzBuzz(n)).filter(_.forall(Character.isDigit)).map(_.toInt).sum
 
@@ -30,7 +30,7 @@ object FizzBuzzNewRule {
 
   def main(args: Array[String]): Unit = {
 
-    val range = 1 to 20
+    val range = 1 to 31
 
     rule("02")(range.map(fizzBuzz).out())
 
@@ -40,7 +40,7 @@ object FizzBuzzNewRule {
 
     rule("05")(fizzBuzz05(range).out())
 
-    rule("05_")(fizzBuzz05_(range.last).out()) // TODO fix bug if range is not 20
+    rule("05_")(fizzBuzz05_(range.last).out())
 
     rule("05__")(fizzBuzz05__(range).out())
 
