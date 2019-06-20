@@ -38,20 +38,33 @@ object FizzBuzzNewRule {
 
     val range = 1 to 20
 
-    rule("02")(range.foreach(i => println(fizzBuzz(i))))
+    rule("02")(range.map(fizzBuzz).out())
 
-    rule("03")(outputln(fizzBuzz03(range)))
+    rule("03")(fizzBuzz03(range).out())
 
-    rule("04")(output(fizzBuzz04(range)))
+    rule("04")(fizzBuzz04(range).out())
 
-    rule("05")(println(fizzBuzz05(range)))
+    rule("05")(fizzBuzz05(range).out())
 
-    rule("05_")(println(fizzBuzz05_(range.last))) // TODO fix bug if range is not 20
+    rule("05_")(fizzBuzz05_(range.last).out()) // TODO fix bug if range is not 20
 
-    rule("05__")(println(fizzBuzz05__(range)))
+    rule("05__")(fizzBuzz05__(range).out())
 
-    rule("06")(outputln(fizzBuzz06(range.head), range.last))
+    rule("06")(fizzBuzz06(range.head).take(range.last).out())
 
+  }
+
+
+  implicit class RichOut[T](x: T) {
+    def out() {
+      println(x)
+    }
+  }
+
+  implicit class RichOutSeq[T](xs: Seq[T]) {
+    def out() {
+      xs.foreach(println)
+    }
   }
 
   private def rule(num: String)(f: => Unit) {
@@ -59,14 +72,5 @@ object FizzBuzzNewRule {
     f
     println()
   }
-
-  private def output[T](xs: Seq[T]) {
-    xs.foreach(print)
-    println()
-  }
-
-  private def outputln[T](xs: Seq[T]): Unit = xs.foreach(println)
-
-  private def outputln[T](xs: Stream[T], n: Int): Unit = xs.take(n).foreach(println)
 
 }
