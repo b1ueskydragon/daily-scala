@@ -2,10 +2,14 @@ package com.github.study.FizzBuzz
 
 object FizzBuzzNewRule {
 
+  def fizzBuzz(i: Int): String = if (i % 15 == 0) "FizzBuzz" else if (i % 5 == 0) "Buzz" else if (i % 3 == 0) "Fizz" else s"$i"
+
   def fizzBuzz03(n: Int): String =
     if (n % 15 == 0) "FizzBuzz" else if (n % 3 == 0) "Fizz" else if (n % 5 == 0) "Buzz" else if (n % 2 == 0) "" else s"$n"
 
-  def fizzBuzz05(xs: List[Int]): Int = xs.filterNot(x => x % 5 == 0 || x % 3 == 0).sum
+  def fizzBuzz05(xs: Range): Int = xs.filterNot(x => x % 3 == 0 || x % 5 == 0).sum
+
+  def fizzBuzz05_(x: Int): Int = (1 + x) * x / 2 - (1 + x / 5) * 5 * x / 5 / 2 - (1 + x / 3) * 3 * (x / 3) / 2 + (1 + x / 15) * 15 * (x / 15) / 2
 
   def fizzBuzz06(from: Int): Stream[String] = {
 
@@ -25,7 +29,7 @@ object FizzBuzzNewRule {
     val range = 1 to 20
 
     rule("02") {
-      range.foreach { i => println(if (i % 15 == 0) "FizzBuzz" else if (i % 5 == 0) "Buzz" else if (i % 3 == 0) "Fizz" else i) }
+      range.foreach { i => println(fizzBuzz(i)) }
     }
 
     rule("03") {
@@ -37,7 +41,15 @@ object FizzBuzzNewRule {
     }
 
     rule("05") {
-      println(fizzBuzz05(range.toList))
+      println(fizzBuzz05(range))
+    }
+
+    rule("05_") {
+      println(fizzBuzz05_(range.last)) // TODO fix bug if range is not 20
+    }
+
+    rule("05__") {
+      println(range.map(n => fizzBuzz(n)).filter(_.forall(Character.isDigit)).map(_.toInt).sum)
     }
 
     rule("06") {
